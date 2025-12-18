@@ -1,8 +1,11 @@
 package converter
 
-import "fmt"
+import (
+	"fmt"
+	"math"
+)
 
-func getRates() map[string]float64 {
+func GetRates() map[string]float64 {
 	// Define currencies
 	currencies := make(map[string]float64)
 
@@ -16,9 +19,9 @@ func getRates() map[string]float64 {
 	return currencies
 }
 
-func convert(amount float64, from, to string) (float64, error) {
+func Convert(amount float64, from, to string) (float64, error) {
 	// Get the rates
-	rates = getRates()
+	rates := GetRates()
 
 	// Define what currency we are converting from and to
 	fromRate, fromValid := rates[from]
@@ -31,6 +34,13 @@ func convert(amount float64, from, to string) (float64, error) {
 
 	// Standardizes everything back to USD
 	usd := amount / fromRate
-	// Converts from USD to what currency we want
-	return usd * toRate
+	// Converts from USD to what currency we want, rounded to 2 decimal places
+	result := math.Round(usd*toRate*100) / 100
+
+	// Validate amount entered
+	if result < 0 {
+		return 0, fmt.Errorf("Invalid amounts entered")
+	}
+
+	return result, nil
 }
