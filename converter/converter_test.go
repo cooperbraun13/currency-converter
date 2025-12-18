@@ -117,6 +117,7 @@ func TestRoundTrip(t *testing.T) {
 		t.Errorf("got %v, want %v", result1, expected1)
 	}
 
+	// We take the result from the first conversion (USD -> EUR) and convert it back to USD
 	result2, err := Convert(result1, "EUR", "USD")
 
 	if err != nil {
