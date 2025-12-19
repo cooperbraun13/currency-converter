@@ -5,6 +5,7 @@ import (
 	"math"
 )
 
+// GetRates maps currencies to their exchange rate using USD as a "base"
 func GetRates() map[string]float64 {
 	// Define currencies
 	currencies := make(map[string]float64)
@@ -19,6 +20,7 @@ func GetRates() map[string]float64 {
 	return currencies
 }
 
+// Convert converts a given amount from one currency to another
 func Convert(amount float64, from, to string) (float64, error) {
 	// Get the rates
 	rates := GetRates()
